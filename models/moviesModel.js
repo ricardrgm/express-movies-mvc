@@ -8,9 +8,21 @@ class MoviesModel{
         return movies.filter((element) => element.id == id)[0];
     }
 
-    newMovie(movie){
+    insertMovie(movie){
        const msg = (movies.push(movie) > 0)? "New Movie to List OK": "New Movie to List KO!!!";
        return msg;
+    }
+
+    deleteMovieById(id){
+        const indice = movies.findIndex((element) => element.id == id)
+        movies.splice(indice,1);
+        return "movie eliminada";
+    }
+
+    deleteMovie(movie){
+        const indice = movies.findIndex((element) => element.id == movie.id)
+        movies.splice(indice,1);
+        return "movie eliminada";
     }
 
 }
