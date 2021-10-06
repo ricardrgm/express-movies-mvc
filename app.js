@@ -1,13 +1,17 @@
 import express from 'express';
-import moviesRoutes from './routes/moviesRoutes.js';
-import errorRoutes from './routes/errorRoutes.js';
+import moviesRouter from './routes/moviesRouter.js';
+import userRouter from './routes/userRouter.js';
+import errorRouter from './routes/errorRouter.js';
 import clientErrorHandler from './middlewares/errorHandler.js';
 const app = express();
 
 app.use(express.json());
-app.use('/movies', moviesRoutes);
-app.use('*',errorRoutes)
+app.use('/users',userRouter);
+app.use('/movies', moviesRouter);
+app.use('*',errorRouter)
 
 app.use(clientErrorHandler);
+// app.use(databaseErrorHandler);
+
 
 export default app;

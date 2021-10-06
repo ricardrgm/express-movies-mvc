@@ -5,10 +5,11 @@ const router = Router();
 
 router.route('/')
          .get(moviesController.getAllMovies)
+         .delete(moviesController.removeMovie)
         //  .post(moviesController.insertMovie)
 
-// router.route('/:id')
-//         .get(moviesController.getMovieById)
+ router.route('/:id')
+         .get(moviesController.getMovieById)
 //         .put(moviesController.updateMovie)
 //         .delete(moviesController.deleteMovi)
 

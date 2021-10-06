@@ -7,6 +7,11 @@ class MoviesModel{
     getMovieById(id){
         return movies.find(element => element.id ==id);
     }
+    removeMovie(id){
+        const index = movies.findIndex(element => element.id ==id);
+        movies.splice(index,1);
+        return;
+    }
 }
 
 export default new MoviesModel()

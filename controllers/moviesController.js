@@ -14,7 +14,16 @@ const getMovieById = (req,res,next)=>{
     res.json(movie);
 }
 
+const removeMovie = (req,res,next)=>{
+    const id = req.body.id;
+
+    moviesModel.removeMovie(id);
+    res.json({result:'ok'});
+}
+
 
 export default {
-    getAllMovies
+    getAllMovies,
+    getMovieById,
+    removeMovie
 }
