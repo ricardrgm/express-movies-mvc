@@ -1,7 +1,9 @@
 import Router from 'express';
 import moviesController from '../controllers/moviesController.js';
-
+import authHandler from '../middlewares/authHandler.js';
 const router = Router();
+
+router.use(authHandler.authUser);
 
 router.route('/')
          .get(moviesController.getAllMovies)

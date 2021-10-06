@@ -5,6 +5,9 @@ class User{
         users.push(user);
         return users.find(element => element.username == user.username);
     }
+    loginUser(user){
+        return users.find(element => (element.username == user.username))
+    }
 }
 
 export default new User();
