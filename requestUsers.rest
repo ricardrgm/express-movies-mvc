@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 POST  http://localhost:3000/users/register
 Content-Type: application/json
 
@@ -14,4 +15,20 @@ Content-Type: application/json
 {
     "username":"peter",
     "password":"pae"
+=======
+POST http://localhost:3000/users/register
+Content-Type: application/json
+
+{
+    "username":"spyder",
+    "password":"man"
+}
+##########
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+{
+    "username":"spyder",
+    "password":"man"
+>>>>>>> 2c6a961fad1d30a13dd7d03499924d8ba9e0c872
 }
