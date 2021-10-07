@@ -30,8 +30,12 @@ const deleteMovieById = (req, res) =>{
 }
 
 const deleteMovie = (req, res) =>{
+    //const movie = req.body.id;
     const movie = req.body;
-    const msg = moviesModel.deleteMovie(movie);
+    const msg = moviesModel.deleteMovieById(movie.id);
+    
+    // const movie = req.body;
+    // const msg = moviesModel.deleteMovie(movie);
     
     res.json({ message: msg});
 }

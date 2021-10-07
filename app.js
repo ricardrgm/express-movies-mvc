@@ -1,12 +1,14 @@
 import express from 'express';
-import moviesRoutes from './routes/moviesRoutes.js';
-import errorRouter from './routes/errorRoutes.js'
+import moviesRouter from './router/moviesRouter.js';
+import userRouter from './router/userRouter.js';
+import errorRouter from './router/errorRouter.js'
 import clientErrorHandler from './middlewares/errorHandler.js';
 
 const app = express();
 
 app.use(express.json());
-app.use('/movies', moviesRoutes);
+app.use('/users', userRouter);
+app.use('/movies', moviesRouter);
 app.use('*', errorRouter);
 
 app.use(clientErrorHandler);
