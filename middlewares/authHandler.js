@@ -14,9 +14,13 @@ const getTokenFrom = (req) => {
   }
 };
 
-//liberia JWT npm i jsonwebtoken
-const SECRET = "misecreto";
-const tokenVerify = (token) => jwt.verify(token, SECRET);
+//llibreria JWT npm i jsonwebtoken
+// const SECRET = "misecreto";
+// const tokenVerify = (token) => jwt.verify(token, SECRET);
+
+//Usando la libreria npm i dotenv para acceder al .env
+const tokenVerify = (token) => jwt.verify(token, process.env.SECRET);
+
 
 const authUser = (req, res, next) => {
   //Authorization: string = "Bearer (posicion = 7) 1234"
@@ -27,7 +31,8 @@ const authUser = (req, res, next) => {
   if (!token || !decodedToken.username) {
     next(HttpError(401, { message: "Token invalis o missing" }));
   } else {
-    const user = userModel.createUser(decodedToken.username);
+    // create user espera un objeto del tipo {username: username}
+    const user = userModel.createUser({username : decodedToken.username});
     user === undefined
       ? next()
       : next(HttpError(401, { message: "el token no es correcto" }));
@@ -41,7 +46,8 @@ const authUser = (req, res, next) => {
 };
 
 const generatorToken = (username) => {
-  const token = jwt.sign({ username: username }, SECRET);
+  //const token = jwt.sign({ username: username }, SECRET);
+  const token = jwt.sign({ username: username }, process.env.SECRET);
   return token;
 };
 
