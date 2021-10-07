@@ -40,6 +40,11 @@ const authUser = (req, res, next) => {
   //token ? next() : next(HttpError(401, { message: "el token no es correcto" }));
 };
 
+const generatorToken = (username) => {
+  const token = jwt.sign({ username: username }, SECRET);
+  return token;
+};
+
 const encryptPassword = async (req, res, next) => {
   try {
     const saltRounds = 10;
@@ -56,4 +61,5 @@ const encryptPassword = async (req, res, next) => {
 export default {
   authUser,
   encryptPassword,
+  generatorToken
 };

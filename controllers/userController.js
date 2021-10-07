@@ -1,7 +1,8 @@
 //  Canalizar todo los errores con el metodo next
 import HttpError from "http-errors";
 import userModel from "../models/userModel.js";
-//import bcrypt from 'bcrypt';
+import authHandler from "../middlewares/authHandler.js";
+import bcrypt from 'bcrypt';
 
 //router.route("/register").post(userController.register); userRoure.js
 //Usamos async cuando const passwordHash = await bcrypt.hash(body.password, saltRounds);
@@ -39,7 +40,7 @@ const register =  (req, res, next) => {
   }  
 };
 
-const login = (req, resp, next) => {
+const login = async (req, resp, next) => {
   const body = req.body;
 
   if (!body.username || !body.password) {
@@ -52,9 +53,17 @@ const login = (req, resp, next) => {
       next(HttpError(401, { message: "user/passw incorrecto" }));
     } else {
 
-      //liberia JWT npm i jsonwebtoken
-      const token = "1234";
+      // comparar el password encriyptado
+      const passwordOk = await bcrypt.compare(body.password, result.password);
+      if (!passwordOk) {
+        next(HttpError(401, { message: "user/passw incorrecto" }));
+      } else {
+
+      //libreria JWT -> npm i jsonwebtoken
+      //generar password
+      const token = authHandler.generatorToken(body.username);
       resp.status(201).json({ token: token });
+      }
     }
   }
 };
