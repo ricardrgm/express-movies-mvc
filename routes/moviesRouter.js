@@ -8,7 +8,7 @@ router.use(authHandler.authUser);
 router.route('/')
          .get(moviesController.getAllMovies)
          .delete(moviesController.removeMovie)
-        //  .post(moviesController.insertMovie)
+         .post(moviesController.insertMovie)
 
  router.route('/:id')
          .get(moviesController.getMovieById)

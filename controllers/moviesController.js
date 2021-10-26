@@ -1,49 +1,47 @@
-import moviesModel from '../models/moviesModel.js';
-import HttpError from 'http-errors';
-const getAllMovies = (req,res) =>{
-    const movies = moviesModel.getMovies();
+import moviesModel from "../models/moviesModel.js";
+import HttpError from "http-errors";
+
+const getAllMovies = (req, res) => {
+  const movies = moviesModel.getMovies();
+  res.json(movies);
+};
+
+// si accedemos a las BBDD el metodo es async (async / await)
+
+// const getAllMovies = async (req,res) =>{
+//     const movies = await moviesModel.getMovies();
+//     res.json(movies);
+// }
+
+const insertMovie = (req, res, next) => {
+  if (!req.body.title) next(HttpError(400, { message: "Movie Title missing" }));
+  else {
+    const movie = req.body; 
+    const movies = moviesModel.insertMovie(movie);
     res.json(movies);
-}
+  }
+};
 
-const getMovieById =(req, res, next) =>{
-    // error management
-    // necesitamos un módulo de mapeo de errores npm i http-errors
-    if(!req.params.id) next(HttpError(400, {message:'sin parametro de búqueda'}));
-
+const getMovieById = (req, res, next) => {
+  if (!req.params.id) next(HttpError(400, { message: "no parameter found" }));
+  else {
     const id = req.params.id;
+
     const movie = moviesModel.getMovieById(id);
     res.json(movie);
-} 
+  }
+};
 
-const insertMovie = (req, res) =>{
-    const movie = req.body;
-    const msg = moviesModel.insertMovie(movie);
-    res.json({ message: msg });
-}
+const removeMovie = (req, res, next) => {
+  const id = req.body.id;
 
-const deleteMovieById = (req, res) =>{
-    const id = req.params.id;
-    const msg = moviesModel.deleteMovieById(id);
-    
-    res.json({ message: msg});
-}
-
-const deleteMovie = (req, res) =>{
-    //const movie = req.body.id;
-    const movie = req.body;
-    const msg = moviesModel.deleteMovieById(movie.id);
-    
-    // const movie = req.body;
-    // const msg = moviesModel.deleteMovie(movie);
-    
-    res.json({ message: msg});
-}
-
+  moviesModel.removeMovie(id);
+  res.json({ result: "ok" });
+};
 
 export default {
-    getAllMovies,
-    getMovieById,
-    insertMovie,
-    deleteMovieById,
-    deleteMovie
-}
+  getAllMovies,
+  getMovieById,
+  removeMovie,
+  insertMovie,
+};
