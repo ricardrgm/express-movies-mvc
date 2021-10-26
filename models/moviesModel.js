@@ -1,16 +1,32 @@
 import movies from '../data/movies.js';
 
+// instancia la clase MySqlManager por lo tanto acceso a los metodos de conexión
+import connection from '../mysql/dbManager.js';
+
 class MoviesModel{
+    // '../data/movies.js'
     getMovies(){
-        return movies;        
+        return movies; 
     }
+
+    // async getMovies(){
+    //          try {
+    //         const result =await connection.query(
+    //             'select * from movies' 
+    //         )
+    //         return result;
+
+    //     } catch (error) {
+    //     }
+    // }
+
     getMovieById(id){
         return movies.filter((element) => element.id == id)[0];
     }
 
     insertMovie(movie){
-       const msg = (movies.push(movie) > 0)? "New Movie to List OK": "New Movie to List KO!!!";
-       return msg;
+       const result = (movies.push(movie) > 0)? movie: "New Movie to List KO!!!";
+       return result;
     }
 
     deleteMovieById(id){
