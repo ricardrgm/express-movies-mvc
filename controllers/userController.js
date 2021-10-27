@@ -12,7 +12,7 @@ import authHandler from "../middlewares/authHandler.js";
 //     return bcrypt.hash(password, saltRounds)
 // }
 
-const register = (req, res, next) => {
+const register = async (req, res, next) => {
   try {
     const body = req.body;
 
@@ -21,16 +21,15 @@ const register = (req, res, next) => {
     } else {
       // const passwordHash = await encrypt(body.password);
 
-      const user = { username: body.username, password: body.password };
+      const user = { username: body.username, password: body.password, rol: body.rol};
 
-      const result = userModel.createUser(user);
+      const result = await userModel.createUser(user);
 
       if (result < 0) next(HttpError(400, { message: "No se pudo registrar" }));
-
       res.status(201).json(result);
     }
   } catch (error) {
-    next(error);
+    next(HttpError(400, { message:error.message}));
   }
 };
 

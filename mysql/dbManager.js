@@ -12,7 +12,7 @@ class MySqlManager {
     try {
       this.connection = await mysql.createConnection(db);
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
   // drop connection
@@ -22,16 +22,16 @@ class MySqlManager {
 
   //query
   async query(sql, params) {
-      try {
-          await this._createConnection(this.db);
-          const [results,field] = await this.connection.execute(sql, params);
-          await this._dropConnection();
+    try {
+      await this._createConnection(this.db);
+      const [results, field] = await this.connection.execute(sql, params);
+      await this._dropConnection();
 
-      } catch (error) {
-          
-      }
+      return results;
+    } catch (error) {
+      throw error;
+    }
   }
 }
-
 
 export default new MySqlManager(config);
